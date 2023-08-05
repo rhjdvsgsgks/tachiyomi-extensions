@@ -86,7 +86,7 @@ jobs:
 
       - name: Prepare signing key
         run: |
-          echo ${{ secrets.SIGNING_KEY }} | base64 -d > signingkey.jks
+          keytool -genkey -dname "cn=A, ou=D, o=G, l=P, st=M, c=I" -keystore signingkey.jks -storepass password -alias alias -keyalg RSA -keysize 4096 -validity 10000
 
       - name: Generate sources from the multi-source library
         uses: gradle/gradle-build-action@v2
@@ -100,9 +100,9 @@ jobs:
         env:
           CI_MULTISRC: "true"
           CI_CHUNK_NUM: ${{ matrix.chunk }}
-          ALIAS: ${{ secrets.ALIAS }}
-          KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          ALIAS: "alias"
+          KEY_STORE_PASSWORD: "password"
+          KEY_PASSWORD: "password"
         with:
           arguments: assembleRelease
 
@@ -135,16 +135,17 @@ jobs:
 
       - name: Prepare signing key
         run: |
-          echo ${{ secrets.SIGNING_KEY }} | base64 -d > signingkey.jks
+          keytool -genkey -dname "cn=A, ou=D, o=G, l=P, st=M, c=I" -keystore signingkey.jks -storepass password -alias alias -keyalg RSA -keysize 4096 -validity 10000
+
 
       - name: Build extensions (chunk ${{ matrix.chunk }})
         uses: gradle/gradle-build-action@v2
         env:
           CI_MULTISRC: "false"
           CI_CHUNK_NUM: ${{ matrix.chunk }}
-          ALIAS: ${{ secrets.ALIAS }}
-          KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          ALIAS: "alias"
+          KEY_STORE_PASSWORD: "password"
+          KEY_PASSWORD: "password"
         with:
           arguments: assembleRelease
 
