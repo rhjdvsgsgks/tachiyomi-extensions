@@ -144,7 +144,7 @@ class Baozi : ParsedHttpSource(), ConfigurableSource {
             document.select(".comic-contain amp-img").dropWhile { element ->
                 element.selectFirst(pageNumberSelector)!!.text().substringBefore('/').toInt() <= i
             }.mapTo(pageList) { element ->
-                Page(i++, imageUrl = element.attr("data-src"))
+                Page(i++, imageUrl = element.attr("data-src").replace("baozicdn.com", preferences.getString("img_cdn_new_host", "baozicdn.com")))
             }
             url = document.selectFirst(Evaluator.Id("next-chapter"))
                 ?.takeIf {
@@ -257,6 +257,11 @@ class Baozi : ParsedHttpSource(), ConfigurableSource {
             entryValues = arrayOf(CHAPTER_ORDER_DISABLED, CHAPTER_ORDER_ENABLED, CHAPTER_ORDER_AGGRESSIVE)
             setDefaultValue(CHAPTER_ORDER_DISABLED)
         }.let { screen.addPreference(it) }
+
+        EditTextPreference(context).apply {
+        key = "img_cdn_new_host"
+        setDefaultValue("baozimh.com")
+    }.let { screen.addPreference(it) }
     }
 
     companion object {
