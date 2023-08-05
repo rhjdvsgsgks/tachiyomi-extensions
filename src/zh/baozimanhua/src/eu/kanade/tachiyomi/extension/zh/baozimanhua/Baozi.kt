@@ -2,6 +2,7 @@ package eu.kanade.tachiyomi.extension.zh.baozimanhua
 
 import android.app.Application
 import android.content.SharedPreferences
+import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceScreen
 import com.github.stevenyomi.baozibanner.BaoziBanner
