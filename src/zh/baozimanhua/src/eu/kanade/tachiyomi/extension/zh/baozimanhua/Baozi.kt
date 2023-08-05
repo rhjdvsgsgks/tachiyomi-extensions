@@ -259,7 +259,7 @@ class Baozi : ParsedHttpSource(), ConfigurableSource {
             setDefaultValue(CHAPTER_ORDER_DISABLED)
         }.let { screen.addPreference(it) }
 
-        EditTextPreference(context).apply {
+        EditTextPreference(screen.context).apply {
         key = "img_cdn_new_host"
         setDefaultValue("baozimh.com")
     }.let { screen.addPreference(it) }
